@@ -7,7 +7,10 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
 
 public class PracticalTest01Var06Service extends Service {
@@ -31,7 +34,7 @@ public class PracticalTest01Var06Service extends Service {
         processingThread.start();
 
 
-        return START_STICKY;
+        return START_REDELIVER_INTENT;
     }
 
     @Override
@@ -70,8 +73,11 @@ public class PracticalTest01Var06Service extends Service {
 
         @Override
         public void run() {
-            sendMessage();
-            sleep();
+            while(true) {
+                sendMessage();
+                sendMessage();
+                sleep();
+            }
         }
 
         private void sleep() {
@@ -86,9 +92,6 @@ public class PracticalTest01Var06Service extends Service {
             Intent intent = new Intent();
             intent.putExtra("link_s", link);
 
-            //Toast.makeText(getApplicationContext(), "TEST", Toast.LENGTH_LONG).show();
-            Log.i(Constants.TAG, link + "din thread");
-
             Random rand = new Random();
             int messageType = rand.nextInt() % 3;
 
@@ -98,10 +101,12 @@ public class PracticalTest01Var06Service extends Service {
             int h = c.get(Calendar.HOUR);
             int d = c.get(Calendar.DATE);
 
-            String mess = String.valueOf(h) +  " " + String.valueOf(min) + " " + String.valueOf(h);
-            intent.putExtra("time_date", mess);
 
-            messageType = Constants.MESSAGE_1;
+            String mess = String.valueOf(h) +  " " + String.valueOf(min) + " " + String.valueOf(h);
+            //intent.putExtra("time_date", mess);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+            intent.putExtra("time_date", dateFormat.format(date));
 
 
             switch(messageType) {

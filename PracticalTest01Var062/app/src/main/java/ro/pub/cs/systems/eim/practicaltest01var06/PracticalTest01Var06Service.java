@@ -27,11 +27,11 @@ public class PracticalTest01Var06Service extends Service {
 
         link = intent.getStringExtra("link");
 
-        ProcessingThread processingThread = new ProcessingThread(this);
+        ProcessingThread processingThread = new ProcessingThread(this, link);
         processingThread.start();
 
 
-        return START_REDELIVER_INTENT;
+        return START_STICKY;
     }
 
     @Override
@@ -61,9 +61,11 @@ public class PracticalTest01Var06Service extends Service {
     private class ProcessingThread extends Thread {
 
         private Context context;
+        String link;
 
-        public ProcessingThread(Context context) {
+        public ProcessingThread(Context context, String l) {
             this.context = context;
+            link = l;
         }
 
         @Override
@@ -85,9 +87,10 @@ public class PracticalTest01Var06Service extends Service {
             intent.putExtra("link_s", link);
 
             //Toast.makeText(getApplicationContext(), "TEST", Toast.LENGTH_LONG).show();
+            Log.i(Constants.TAG, link + "din thread");
 
             Random rand = new Random();
-            int messageType = rand.nextInt() % 2;
+            int messageType = rand.nextInt() % 3;
 
             Calendar c = Calendar.getInstance();
             int seconds = c.get(Calendar.SECOND);
@@ -98,10 +101,11 @@ public class PracticalTest01Var06Service extends Service {
             String mess = String.valueOf(h) +  " " + String.valueOf(min) + " " + String.valueOf(h);
             intent.putExtra("time_date", mess);
 
+            messageType = Constants.MESSAGE_1;
+
 
             switch(messageType) {
                 case Constants.MESSAGE_1:
-                    Log.i(Constants.TAG, "MeSSAGE 1");
                     intent.setAction(Constants.ACTION_1);
                     break;
                 case Constants.MESSAGE_2:

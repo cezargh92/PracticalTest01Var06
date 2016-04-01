@@ -16,11 +16,12 @@ public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
+        String link = intent.getStringExtra("link_s");
 
         Log.i(Constants.TAG, "RECEIVER");
 
         if (Constants.ACTION_1.equals(action)) {
-            Log.i(Constants.TAG, "ACTION_1 " + intent.getStringExtra("link"));
+            Log.i(Constants.TAG, "ACTION_1 " + intent.getStringExtra("link_s"));
         }
     }
 

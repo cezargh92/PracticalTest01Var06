@@ -25,6 +25,7 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
     private PracticalTest01Var06Service service;
     private StartedServiceBroadcastReceiver recv;
 
+
     private int req;
 
     @Override
@@ -138,6 +139,12 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
         super.onResume();
         IntentFilter filter = new IntentFilter(Constants.ACTION_1);
         registerReceiver(recv, filter);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        stopService(new Intent(this, PracticalTest01Var06Service.class));
     }
 
     @Override

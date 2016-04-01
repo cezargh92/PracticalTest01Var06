@@ -95,15 +95,6 @@ public class PracticalTest01Var06Service extends Service {
             Random rand = new Random();
             int messageType = rand.nextInt() % 3;
 
-            Calendar c = Calendar.getInstance();
-            int seconds = c.get(Calendar.SECOND);
-            int min = c.get(Calendar.MINUTE);
-            int h = c.get(Calendar.HOUR);
-            int d = c.get(Calendar.DATE);
-
-
-            String mess = String.valueOf(h) +  " " + String.valueOf(min) + " " + String.valueOf(h);
-            //intent.putExtra("time_date", mess);
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
             intent.putExtra("time_date", dateFormat.format(date));

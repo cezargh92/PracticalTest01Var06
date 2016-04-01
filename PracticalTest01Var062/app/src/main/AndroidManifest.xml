@@ -17,6 +17,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".PracticalTest01Var06SecondaryActivity"
+            android:label="@string/title_activity_practical_test01_var06_secondary"></activity>
+
+        <receiver
+            android:name=".StartedServiceBroadcastReceiver">
+            <intent-filter>
+                <action android:name="ro.pub.cs.systems.eim.practicaltest01var06.Constants.ACTION_1" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

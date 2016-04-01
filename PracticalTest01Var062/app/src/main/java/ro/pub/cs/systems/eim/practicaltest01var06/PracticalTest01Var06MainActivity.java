@@ -1,5 +1,6 @@
 package ro.pub.cs.systems.eim.practicaltest01var06;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -19,6 +20,10 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
     private RelativeLayout mCenterRl;
     private EditText mLinkEditText;
     private EditText mTopEditText;
+    private Button mNav;
+    private PracticalTest01Var06Service service;
+
+    private int req;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
         mLinkEditText = (EditText) findViewById(R.id.link_edit_text);
         mPassFailButton = (Button) findViewById(R.id.pass_fail_button);
         mTopEditText = (EditText) findViewById(R.id.top_edit_text);
+        mNav = (Button) findViewById(R.id.second_app_button);
 
         mDetailsButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +64,9 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
                     if ("http".equals(editTextString.substring(0, 4))) {
                         mPassFailButton.setText("Pass");
                         mPassFailButton.setBackground(getResources().getDrawable(R.color.green));
+                        Intent intent = new Intent(getApplicationContext(), PracticalTest01Var06Service.class);
+                        startService(intent);
+
                     } else {
                         mPassFailButton.setText("Fail");
                         mPassFailButton.setBackground(getResources().getDrawable(R.color.red));
@@ -73,9 +82,30 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
 
             }
         });
+
+        req = 10;
+
+        mNav.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), PracticalTest01Var06SecondaryActivity.class);
+                intent.putExtra("link", mLinkEditText.getText().toString());
+                intent.putExtra("pass_fail", mPassFailButton.getText().toString());
+                startActivityForResult(intent, req);
+            }
+        });
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK)
+            Toast.makeText(getApplicationContext(), "OK!!", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(getApplicationContext(), "CANCEL!!", Toast.LENGTH_LONG).show();
+    }
+
+        @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putString("top_edit_text", mTopEditText.getText().toString());

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 import java.util.Random;
@@ -83,6 +84,8 @@ public class PracticalTest01Var06Service extends Service {
             Intent intent = new Intent();
             intent.putExtra("link_s", link);
 
+            //Toast.makeText(getApplicationContext(), "TEST", Toast.LENGTH_LONG).show();
+
             Random rand = new Random();
             int messageType = rand.nextInt() % 2;
 
@@ -98,6 +101,7 @@ public class PracticalTest01Var06Service extends Service {
 
             switch(messageType) {
                 case Constants.MESSAGE_1:
+                    Log.i(Constants.TAG, "MeSSAGE 1");
                     intent.setAction(Constants.ACTION_1);
                     break;
                 case Constants.MESSAGE_2:

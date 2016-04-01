@@ -1,6 +1,7 @@
 package ro.pub.cs.systems.eim.practicaltest01var06;
 
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
@@ -22,6 +23,7 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
     private EditText mTopEditText;
     private Button mNav;
     private PracticalTest01Var06Service service;
+    private StartedServiceBroadcastReceiver recv;
 
     private int req;
 
@@ -64,7 +66,9 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
                     if ("http".equals(editTextString.substring(0, 4))) {
                         mPassFailButton.setText("Pass");
                         mPassFailButton.setBackground(getResources().getDrawable(R.color.green));
+
                         Intent intent = new Intent(getApplicationContext(), PracticalTest01Var06Service.class);
+                        intent.putExtra("link", mLinkEditText.getText().toString());
                         startService(intent);
 
                     } else {
@@ -82,6 +86,8 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
 
             }
         });
+
+        recv = new StartedServiceBroadcastReceiver();
 
         req = 10;
 
@@ -125,6 +131,13 @@ public class PracticalTest01Var06MainActivity extends ActionBarActivity {
 
         Toast.makeText(getApplicationContext(), top + "\n" + detailsButton + "\n" + passFail + "\n" + link, Toast.LENGTH_LONG).show();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        IntentFilter filter = new IntentFilter(Constants.ACTION_1);
+        registerReceiver(recv, filter);
     }
 
     @Override

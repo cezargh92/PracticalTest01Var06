@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
 
@@ -16,8 +17,10 @@ public class StartedServiceBroadcastReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
 
+        Log.i(Constants.TAG, "RECEIVER");
+
         if (Constants.ACTION_1.equals(action)) {
-            Log.i(Constants.TAG, "ACTION_1" + intent.getStringExtra("link"));
+            Log.i(Constants.TAG, "ACTION_1 " + intent.getStringExtra("link"));
         }
     }
 

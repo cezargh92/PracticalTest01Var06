@@ -27,6 +27,7 @@
                 <action android:name="ro.pub.cs.systems.eim.practicaltest01var06.Constants.ACTION_1" />
             </intent-filter>
         </receiver>
+        <service android:name=".PracticalTest01Var06Service" />
     </application>
 
 </manifest>
